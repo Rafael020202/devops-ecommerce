@@ -1,7 +1,9 @@
-import { Middleware, HttpResponse } from '@/contracts';
-import { verifyToken, success, unauthorized, badRequest } from '@/helpers';
+import { Middleware, HttpResponse, Jwt } from '@/contracts';
+import { success, unauthorized, badRequest } from '@/helpers';
 
 export class AuthMiddleware implements Middleware {
+  constructor(private jwt: Jwt) {}
+
   async handle(request: AuthMiddleware.Request): Promise<HttpResponse> {
     const { authorization } = request;
     try {
@@ -10,7 +12,7 @@ export class AuthMiddleware implements Middleware {
       }
 
       const [, token] = authorization.split('Bearer ');
-      const payload = verifyToken(token);
+      const payload = this.jwt.verifyToken(token);
 
       return success({ user_id: payload.user_id });
     } catch (error) {

@@ -23,7 +23,11 @@ const makeSignUpService = () => {
   return signInService;
 };
 
-const makeAuthMiddleware = () => new AuthMiddleware();
+const makeAuthMiddleware = () => {
+  const jsonwebtoken = new JwtProvider();
+
+  new AuthMiddleware(jsonwebtoken);
+};
 
 export const userRoutes = [
   {
