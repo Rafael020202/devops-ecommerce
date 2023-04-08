@@ -1,5 +1,5 @@
 import { IUserRepository } from '@/contracts';
-import { MongoHelper } from '@/infra/db/mongodb';
+import { MongoHelper } from '@/infra/db';
 import { uniqueid } from '@/helpers';
 
 export class UserMongoRepository implements IUserRepository {
