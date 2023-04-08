@@ -3,3 +3,4 @@ export * from './repositories-contract';
 export * from './service-contract';
 export * from './http-contract';
 export * from './middleware-contract';
+export * from './providers';

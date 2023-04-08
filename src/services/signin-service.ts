@@ -1,9 +1,14 @@
 import { Service, HttpResponse } from '@/contracts';
 import { IUserRepository } from '@/contracts';
-import { badRequest, success, compare, sigin, forbidden } from '@/helpers';
+import { Criptography, Jwt } from '@/contracts';
+import { badRequest, success, forbidden } from '@/helpers';
 
 export class SignInService implements Service {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private criptography: Criptography,
+    private jwt: Jwt
+  ) {}
 
   async handle(request: SignInService.Request): Promise<HttpResponse> {
     const { email, password } = request;
@@ -14,13 +19,16 @@ export class SignInService implements Service {
       return badRequest('Usuário não encontrado.');
     }
 
-    const comparePassword = await compare(password, user.password);
+    const comparePassword = await this.criptography.compare(
+      password,
+      user.password
+    );
 
     if (!comparePassword) {
       return forbidden('Senha inválida.');
     }
 
-    const token = await sigin({ user_id: user.id });
+    const token = await this.jwt.sigin({ user_id: user.id });
 
     delete user.password;
 

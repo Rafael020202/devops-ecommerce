@@ -1,9 +1,12 @@
 import { Service, CreateUserDTO, HttpResponse } from '@/contracts';
-import { IUserRepository } from '@/contracts';
-import { badRequest, created, hash } from '@/helpers';
+import { IUserRepository, Criptography } from '@/contracts';
+import { badRequest, created } from '@/helpers';
 
 export class CreateUserService implements Service {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    private userRepository: IUserRepository,
+    private criptography: Criptography
+  ) {}
 
   async handle(request: CreateUserService.Request): Promise<HttpResponse> {
     const [user] = await this.userRepository.find({ email: request.email });
@@ -13,7 +16,7 @@ export class CreateUserService implements Service {
     }
 
     const { email, name, password } = request;
-    const hashedPassword = await hash(password);
+    const hashedPassword = await this.criptography.hash(password);
 
     await this.userRepository.create({ email, name, password: hashedPassword });
 
