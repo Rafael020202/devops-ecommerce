@@ -1,10 +1,10 @@
 import { Service, CreateUserDTO, HttpResponse } from '@/contracts';
-import { IUserRepository, Criptography } from '@/contracts';
+import { UserRepository, Criptography } from '@/contracts';
 import { badRequest, created } from '@/helpers';
 
 export class CreateUserService implements Service {
   constructor(
-    private userRepository: IUserRepository,
+    private userRepository: UserRepository,
     private criptography: Criptography
   ) {}
 

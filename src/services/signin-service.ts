@@ -1,11 +1,11 @@
 import { Service, HttpResponse } from '@/contracts';
-import { IUserRepository } from '@/contracts';
+import { UserRepository } from '@/contracts';
 import { Criptography, Jwt } from '@/contracts';
 import { badRequest, success, forbidden } from '@/helpers';
 
 export class SignInService implements Service {
   constructor(
-    private userRepository: IUserRepository,
+    private userRepository: UserRepository,
     private criptography: Criptography,
     private jwt: Jwt
   ) {}

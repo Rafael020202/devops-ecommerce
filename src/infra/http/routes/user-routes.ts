@@ -23,13 +23,13 @@ const makeSignUpService = () => {
   return signInService;
 };
 
-const authMiddleware = new AuthMiddleware();
+const makeAuthMiddleware = () => new AuthMiddleware();
 
 export const userRoutes = [
   {
     method: 'post',
     path: '/user',
-    middleware: authMiddleware,
+    middleware: makeAuthMiddleware(),
     handler: makeCreateUserService()
   },
   {

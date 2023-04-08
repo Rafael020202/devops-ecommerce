@@ -1,11 +1,11 @@
-import { IUserRepository } from '@/contracts';
+import { UserRepository } from '@/contracts';
 import { MongoHelper } from '@/infra/db';
 import { uniqueid } from '@/helpers';
 
-export class UserMongoRepository implements IUserRepository {
+export class UserMongoRepository implements UserRepository {
   async create(
-    data: IUserRepository.create['Params']
-  ): Promise<IUserRepository.create['Result']> {
+    data: UserRepository.create['Params']
+  ): Promise<UserRepository.create['Result']> {
     const usersCollection = MongoHelper.getCollection('users');
 
     return usersCollection.insertOne({
@@ -15,8 +15,8 @@ export class UserMongoRepository implements IUserRepository {
   }
 
   async find(
-    data: IUserRepository.find['Params']
-  ): Promise<IUserRepository.find['Result']> {
+    data: UserRepository.find['Params']
+  ): Promise<UserRepository.find['Result']> {
     const usersCollection = MongoHelper.getCollection('users');
 
     return <any>(

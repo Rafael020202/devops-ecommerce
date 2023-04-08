@@ -1,17 +1,17 @@
 import { CreateUserDTO, FindUserDTO } from '@/contracts';
 import { UserModel } from '@/models';
 
-export interface IUserRepository {
+export interface UserRepository {
   create(
-    data: IUserRepository.create['Params']
-  ): Promise<IUserRepository.create['Result']>;
+    data: UserRepository.create['Params']
+  ): Promise<UserRepository.create['Result']>;
 
   find(
-    data: IUserRepository.find['Params']
-  ): Promise<IUserRepository.find['Result']>;
+    data: UserRepository.find['Params']
+  ): Promise<UserRepository.find['Result']>;
 }
 
-export namespace IUserRepository {
+export namespace UserRepository {
   export type create = {
     Params: CreateUserDTO;
     Result: any;
