@@ -1,7 +1,13 @@
 import { Service, HttpResponse } from '@/contracts';
 import { UserRepository } from '@/contracts';
 import { Criptography, Jwt } from '@/contracts';
-import { badRequest, success, forbidden } from '@/helpers';
+import {
+  badRequest,
+  success,
+  forbidden,
+  conflict,
+  checkMissingParams
+} from '@/helpers';
 
 export class SignInService implements Service {
   constructor(
@@ -11,6 +17,12 @@ export class SignInService implements Service {
   ) {}
 
   async handle(request: SignInService.Request): Promise<HttpResponse> {
+    const errors = checkMissingParams(request, ['password', 'email']);
+
+    if (errors.length) {
+      return conflict(errors);
+    }
+
     const { email, password } = request;
 
     const [user] = await this.userRepository.find({ email });

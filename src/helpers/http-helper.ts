@@ -21,6 +21,13 @@ export const unauthorized = (msg: string): HttpResponse => {
   };
 };
 
+export const conflict = (errors: string[]): HttpResponse => {
+  return {
+    body: { errors },
+    status: 409
+  };
+};
+
 export const created = (): HttpResponse => {
   return {
     body: {},
