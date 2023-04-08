@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    image: rlimadckr/ecommerce:1.0
+    container_name: application
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3002:3002
+    volumes:
+      - .:/home/app
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo-volume:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+    env_file:
+      - ./.env
+volumes:
+  mongo-volume:
