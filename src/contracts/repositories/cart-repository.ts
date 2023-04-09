@@ -1,4 +1,3 @@
-import { FindCartDTO } from '@/contracts';
 import { CartModel } from '@/models';
 
 export interface CartRepository {
@@ -22,7 +21,7 @@ export namespace CartRepository {
   };
 
   export type find = {
-    Params: FindCartDTO;
+    Params: { [key: string]: any };
     Result: CartModel[];
   };
 

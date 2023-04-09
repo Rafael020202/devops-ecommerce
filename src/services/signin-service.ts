@@ -1,4 +1,4 @@
-import { Service, HttpResponse } from '@/contracts';
+import { Service, HttpResponse, SignInDTO } from '@/contracts';
 import { UserRepository } from '@/contracts';
 import { Criptography, Jwt } from '@/contracts';
 import {
@@ -24,7 +24,6 @@ export class SignInService implements Service {
     }
 
     const { email, password } = request;
-
     const [user] = await this.userRepository.find({ email });
 
     if (!user) {
@@ -49,8 +48,5 @@ export class SignInService implements Service {
 }
 
 export namespace SignInService {
-  export type Request = {
-    email: string;
-    password: string;
-  };
+  export type Request = SignInDTO;
 }

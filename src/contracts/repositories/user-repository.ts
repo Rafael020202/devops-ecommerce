@@ -1,4 +1,3 @@
-import { FindUserDTO } from '@/contracts';
 import { UserModel } from '@/models';
 
 export interface UserRepository {
@@ -18,7 +17,7 @@ export namespace UserRepository {
   };
 
   export type find = {
-    Params: FindUserDTO;
+    Params: { [key: string]: any };
     Result: UserModel[];
   };
 }
