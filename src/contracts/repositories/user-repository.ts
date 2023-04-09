@@ -1,4 +1,4 @@
-import { CreateUserDTO, FindUserDTO } from '@/contracts';
+import { FindUserDTO } from '@/contracts';
 import { UserModel } from '@/models';
 
 export interface UserRepository {
@@ -13,7 +13,7 @@ export interface UserRepository {
 
 export namespace UserRepository {
   export type create = {
-    Params: CreateUserDTO;
+    Params: UserModel;
     Result: any;
   };
 

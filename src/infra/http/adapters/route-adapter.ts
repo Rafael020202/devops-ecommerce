@@ -8,7 +8,11 @@ export async function routeAdapter(
   service: Service
 ) {
   try {
-    const result = await service.handle({ ...req.body });
+    const result = await service.handle({
+      ...req.body,
+      ...req.params,
+      user_id: req.user_id
+    });
 
     return res.status(result.status).json(result.body);
   } catch (error) {

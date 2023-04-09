@@ -1,6 +1,12 @@
 import { Service, CreateUserDTO, HttpResponse } from '@/contracts';
 import { UserRepository, Criptography } from '@/contracts';
-import { badRequest, created, conflict, checkMissingParams } from '@/helpers';
+import {
+  badRequest,
+  created,
+  conflict,
+  checkMissingParams,
+  uniqueid
+} from '@/helpers';
 
 export class CreateUserService implements Service {
   constructor(
@@ -24,7 +30,14 @@ export class CreateUserService implements Service {
     const { email, name, password } = request;
     const hashedPassword = await this.criptography.hash(password);
 
-    await this.userRepository.create({ email, name, password: hashedPassword });
+    await this.userRepository.create({
+      id: uniqueid(),
+      email,
+      name,
+      password: hashedPassword,
+      created_at: new Date(),
+      updated_at: new Date()
+    });
 
     return created();
   }

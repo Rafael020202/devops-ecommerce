@@ -1,6 +1,5 @@
 import { UserRepository } from '@/contracts';
 import { MongoHelper } from '@/infra/db';
-import { uniqueid } from '@/helpers';
 
 export class UserMongoRepository implements UserRepository {
   async create(
@@ -8,10 +7,7 @@ export class UserMongoRepository implements UserRepository {
   ): Promise<UserRepository.create['Result']> {
     const usersCollection = MongoHelper.getCollection('users');
 
-    return usersCollection.insertOne({
-      id: uniqueid(),
-      ...data
-    });
+    return usersCollection.insertOne(data);
   }
 
   async find(

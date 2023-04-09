@@ -1,14 +1,13 @@
 import express, { Router, Request, Response } from 'express';
 
 import { routeAdapter, middlewareAdapter } from '@/infra/http';
-import { userRoutes } from './';
+import { userRoutes, cartRoutes } from './';
 
-const rendered = [...userRoutes];
 const routes = express.Router();
 
-routes.use(express.json());
-
 export const renderRoutes = (): Router => {
+  const rendered = [...userRoutes, ...cartRoutes];
+
   for (const route of rendered) {
     if (route.middleware) {
       routes[route.method](

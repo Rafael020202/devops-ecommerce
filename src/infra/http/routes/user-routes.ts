@@ -1,7 +1,5 @@
 import { CreateUserService, SignInService } from '@/services';
 import { BcryptProvider, JwtProvider } from '@/providers';
-import { AuthMiddleware } from '@/middlewares';
-
 import { UserMongoRepository } from '@/infra/db';
 
 const makeCreateUserService = () => {
@@ -23,17 +21,10 @@ const makeSignUpService = () => {
   return signInService;
 };
 
-const makeAuthMiddleware = () => {
-  const jsonwebtoken = new JwtProvider();
-
-  new AuthMiddleware(jsonwebtoken);
-};
-
 export const userRoutes = [
   {
     method: 'post',
     path: '/user',
-    middleware: makeAuthMiddleware(),
     handler: makeCreateUserService()
   },
   {
