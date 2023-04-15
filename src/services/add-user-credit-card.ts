@@ -11,17 +11,17 @@ export class AddUserCreditCard implements Service {
 
   async handle(request: AddUserCreditCard.Request): Promise<HttpResponse> {
     const errors = checkMissingParams(request, [
-      'card.card_cvv',
-      'card.card_expiration_date',
-      'card.card_holder_name',
-      'card.card_number'
+      'card_cvv',
+      'card_expiration_date',
+      'card_holder_name',
+      'card_number'
     ]);
 
     if (errors.length) {
       return conflict(errors);
     }
 
-    const { user_id, card } = request;
+    const { user_id, ...card } = request;
     const expirationDate = new Date(card.card_expiration_date);
 
     if (expirationDate < new Date()) {
