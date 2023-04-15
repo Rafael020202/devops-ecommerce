@@ -20,7 +20,12 @@ export class CreateUserService implements Service {
   ) {}
 
   async handle(request: CreateUserService.Request): Promise<HttpResponse> {
-    const errors = checkMissingParams(request, ['name', 'password', 'email']);
+    const errors = checkMissingParams(request, [
+      'name',
+      'password',
+      'document',
+      'email'
+    ]);
 
     if (errors.length) {
       return conflict(errors);
@@ -32,13 +37,14 @@ export class CreateUserService implements Service {
       return badRequest('E-mail já possui cadastro.');
     }
 
-    const { email, name, password } = request;
+    const { email, name, password, document } = request;
     const hashedPassword = await this.criptography.hash(password);
 
     await this.userRepository.create({
       id: uniqueid(),
       email,
       name,
+      document,
       password: hashedPassword,
       created_at: new Date(),
       updated_at: new Date()

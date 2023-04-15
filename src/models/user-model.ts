@@ -3,6 +3,7 @@ export type UserModel = {
   name: string;
   email: string;
   password: string;
+  document: string;
   cards?: {
     card_cvv: string;
     card_expiration_date: string;
