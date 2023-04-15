@@ -3,16 +3,18 @@ import {
   CheckoutDTO,
   CartRepository,
   UserRepository,
+  PurchaseRepository,
   HttpResponse,
   PaymentGateway
 } from '@/contracts';
-import { badRequest, created } from '@/helpers';
+import { badRequest, success, uniqueid } from '@/helpers';
 
 export class CheckoutService implements Service {
   constructor(
     private paymentGateway: PaymentGateway,
     private cartRepository: CartRepository,
-    private userRepository: UserRepository
+    private userRepository: UserRepository,
+    private purchaseRepository: PurchaseRepository
   ) {}
 
   async handle(request: CheckoutService.Request): Promise<HttpResponse> {
@@ -54,7 +56,7 @@ export class CheckoutService implements Service {
       amount += p.qty * p.price;
     });
 
-    const transactionCredted = await this.paymentGateway.createTransaction({
+    const transaction = await this.paymentGateway.createTransaction({
       amount,
       billing: {
         city: userData.address.city,
@@ -87,16 +89,35 @@ export class CheckoutService implements Service {
       }))
     });
 
-    if (!transactionCredted) {
+    if (!transaction) {
       return badRequest('um problema ocorreu ao tentar finalizar a compra.');
     }
+
+    const purchase = {
+      id: uniqueid(),
+      user_id,
+      amount,
+      external_id: transaction.id,
+      items,
+      status: transaction.status,
+      created_at: new Date(),
+      updated_at: new Date()
+    };
+
+    await this.purchaseRepository.create(purchase);
 
     await this.cartRepository.update({
       user_id,
       newData: { products: [] }
     });
 
-    return created();
+    delete purchase.created_at;
+    delete purchase.updated_at;
+    delete purchase.external_id;
+    delete purchase.user_id;
+    delete (<any>purchase)._id;
+
+    return success(purchase);
   }
 }
 

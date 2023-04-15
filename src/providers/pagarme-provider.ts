@@ -4,17 +4,20 @@ import { createTransactionRequest } from '@/helpers';
 export class PagarmeProvider implements PaymentGateway {
   async createTransaction(
     params: PaymentGateway.createTransaction['Params']
-  ): Promise<boolean> {
+  ): Promise<PaymentGateway.createTransaction['Result']> {
     try {
       const result = await createTransactionRequest(params);
 
       logger.info(result);
 
-      return result.status === 200;
+      return {
+        id: result.id,
+        status: result.status
+      };
     } catch (error) {
       logger.error(error.response.data);
     }
 
-    return false;
+    return;
   }
 }

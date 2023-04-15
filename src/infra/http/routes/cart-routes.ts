@@ -6,7 +6,8 @@ import {
 import {
   CartMongoRepository,
   ProductMongoRepository,
-  UserMongoRepository
+  UserMongoRepository,
+  PurchaseMongoRepository
 } from '@/infra/db';
 import { AuthMiddleware } from '@/middlewares';
 import { JwtProvider, PagarmeProvider } from '@/providers';
@@ -27,9 +28,15 @@ const makeAddProductToCartService = () => {
 const makeCheckoutService = () => {
   const cartMongoRepository = new CartMongoRepository();
   const userMongoRepository = new UserMongoRepository();
+  const purchaseMongoRepository = new PurchaseMongoRepository();
   const pagarme = new PagarmeProvider();
 
-  return new CheckoutService(pagarme, cartMongoRepository, userMongoRepository);
+  return new CheckoutService(
+    pagarme,
+    cartMongoRepository,
+    userMongoRepository,
+    purchaseMongoRepository
+  );
 };
 
 const makeRemoveProductFromCartService = () => {

@@ -50,5 +50,7 @@ export const createTransactionRequest = (
     }))
   };
 
-  return axios.post(`${pagarme.host}/transactions`, data);
+  return axios
+    .post(`${pagarme.host}/transactions`, data)
+    .then((response) => response.data);
 };

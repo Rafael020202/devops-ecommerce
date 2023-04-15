@@ -1,7 +1,7 @@
 export interface PaymentGateway {
   createTransaction(
     params: PaymentGateway.createTransaction['Params']
-  ): Promise<boolean>;
+  ): Promise<PaymentGateway.createTransaction['Result']>;
 }
 
 export namespace PaymentGateway {
@@ -37,6 +37,11 @@ export namespace PaymentGateway {
         unit_price: number;
         quantity: number;
       }[];
+    };
+
+    Result: {
+      id: any;
+      status: string;
     };
   };
 }
