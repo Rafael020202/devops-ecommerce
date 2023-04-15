@@ -16,7 +16,9 @@ export const checkMissingParams = (data: any, fields: string[]) => {
         }
       }
     } else {
-      if (!data?.[field]?.trim()) {
+      const value = data?.[field];
+
+      if (!value || (typeof value === 'string' && !value.trim())) {
         errors.push(`{${field}} é obrigatório.`);
       }
     }
