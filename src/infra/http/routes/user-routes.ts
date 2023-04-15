@@ -3,7 +3,8 @@ import {
   SignInService,
   UpdateUserAddressService,
   AddUserCreditCard,
-  DeleteUserCreditCard
+  DeleteUserCreditCard,
+  SetUserDefaultCreditCardService
 } from '@/services';
 import { BcryptProvider, JwtProvider } from '@/providers';
 import { UserMongoRepository } from '@/infra/db';
@@ -48,6 +49,12 @@ const makeDeleteUserCreditCard = () => {
   return new DeleteUserCreditCard(userRepository);
 };
 
+const makeSetUserDefaultCreditCardService = () => {
+  const userRepository = new UserMongoRepository();
+
+  return new SetUserDefaultCreditCardService(userRepository);
+};
+
 export const userRoutes = [
   {
     method: 'post',
@@ -75,6 +82,12 @@ export const userRoutes = [
     method: 'delete',
     path: '/user/credit_card/:card_cvv',
     handler: makeDeleteUserCreditCard(),
+    middleware: makeAuthMiddleware()
+  },
+  {
+    method: 'patch',
+    path: '/user/credit_card/default/:card_cvv',
+    handler: makeSetUserDefaultCreditCardService(),
     middleware: makeAuthMiddleware()
   }
 ];
