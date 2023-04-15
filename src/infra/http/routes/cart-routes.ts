@@ -1,10 +1,15 @@
 import {
   AddProductToCartService,
-  RemoveProductFromCartService
+  RemoveProductFromCartService,
+  CheckoutService
 } from '@/services';
-import { CartMongoRepository, ProductMongoRepository } from '@/infra/db';
+import {
+  CartMongoRepository,
+  ProductMongoRepository,
+  UserMongoRepository
+} from '@/infra/db';
 import { AuthMiddleware } from '@/middlewares';
-import { JwtProvider } from '@/providers';
+import { JwtProvider, PagarmeProvider } from '@/providers';
 
 const makeAuthMiddleware = () => {
   const jsonwebtoken = new JwtProvider();
@@ -17,6 +22,14 @@ const makeAddProductToCartService = () => {
   const productMongoRepository = new ProductMongoRepository();
 
   return new AddProductToCartService(cartRepository, productMongoRepository);
+};
+
+const makeCheckoutService = () => {
+  const cartMongoRepository = new CartMongoRepository();
+  const userMongoRepository = new UserMongoRepository();
+  const pagarme = new PagarmeProvider();
+
+  return new CheckoutService(pagarme, cartMongoRepository, userMongoRepository);
 };
 
 const makeRemoveProductFromCartService = () => {
@@ -37,5 +50,11 @@ export const cartRoutes = [
     path: '/cart/product/:product_id',
     middleware: makeAuthMiddleware(),
     handler: makeRemoveProductFromCartService()
+  },
+  {
+    method: 'post',
+    path: '/cart/checkout',
+    middleware: makeAuthMiddleware(),
+    handler: makeCheckoutService()
   }
 ];

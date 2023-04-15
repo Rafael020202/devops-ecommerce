@@ -28,7 +28,7 @@ export const createTransactionRequest = (
           number: customer.document
         }
       ],
-      phone_numbers: [`+55${customer.phone_number}`]
+      phone_numbers: [customer.phone_number]
     },
     billing: {
       name: billing.name,

@@ -6,3 +6,4 @@ export * from './update-user-address-service';
 export * from './add-user-credit-card';
 export * from './delete-user-credit-card';
 export * from './set-user-default-credit-card-service';
+export * from './checkout-service';

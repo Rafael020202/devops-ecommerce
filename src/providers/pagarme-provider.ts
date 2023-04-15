@@ -12,7 +12,7 @@ export class PagarmeProvider implements PaymentGateway {
 
       return result.status === 200;
     } catch (error) {
-      logger.error(error);
+      logger.error(error.response.data);
     }
 
     return false;
