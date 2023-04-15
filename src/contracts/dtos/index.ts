@@ -4,3 +4,4 @@ export * from './signin-dto';
 export * from './remove-from-cart-dto';
 export * from './update-user-address-dto';
 export * from './add-user-credit-card-dto';
+export * from './delete-user-credit-card-dto';

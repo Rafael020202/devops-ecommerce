@@ -31,7 +31,7 @@ export class AddUserCreditCard implements Service {
       user.cards.find(({ card_cvv }) => card_cvv === card.card_cvv);
 
     if (creditCardAlreadyExists) {
-      return forbidden('cartão já cadastrado.');
+      return forbidden('cartão de crédito já cadastrado.');
     }
 
     card.card_expiration_date =

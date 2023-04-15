@@ -2,7 +2,8 @@ import {
   CreateUserService,
   SignInService,
   UpdateUserAddressService,
-  AddUserCreditCard
+  AddUserCreditCard,
+  DeleteUserCreditCard
 } from '@/services';
 import { BcryptProvider, JwtProvider } from '@/providers';
 import { UserMongoRepository } from '@/infra/db';
@@ -12,9 +13,7 @@ const makeCreateUserService = () => {
   const userRepository = new UserMongoRepository();
   const bcrypt = new BcryptProvider();
 
-  const createUserService = new CreateUserService(userRepository, bcrypt);
-
-  return createUserService;
+  return new CreateUserService(userRepository, bcrypt);
 };
 
 const makeSignUpService = () => {
@@ -22,9 +21,7 @@ const makeSignUpService = () => {
   const bcrypt = new BcryptProvider();
   const jsonwebtoken = new JwtProvider();
 
-  const signInService = new SignInService(userRepository, bcrypt, jsonwebtoken);
-
-  return signInService;
+  return new SignInService(userRepository, bcrypt, jsonwebtoken);
 };
 
 const makeUpdateUserAddressService = () => {
@@ -43,6 +40,12 @@ const makeAddUserCreditCard = () => {
   const userRepository = new UserMongoRepository();
 
   return new AddUserCreditCard(userRepository);
+};
+
+const makeDeleteUserCreditCard = () => {
+  const userRepository = new UserMongoRepository();
+
+  return new DeleteUserCreditCard(userRepository);
 };
 
 export const userRoutes = [
@@ -66,6 +69,12 @@ export const userRoutes = [
     method: 'post',
     path: '/user/credit_card',
     handler: makeAddUserCreditCard(),
+    middleware: makeAuthMiddleware()
+  },
+  {
+    method: 'delete',
+    path: '/user/credit_card/:card_cvv',
+    handler: makeDeleteUserCreditCard(),
     middleware: makeAuthMiddleware()
   }
 ];

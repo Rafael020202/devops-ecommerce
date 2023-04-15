@@ -8,7 +8,7 @@ export class AuthMiddleware implements Middleware {
     const { authorization } = request;
     try {
       if (!authorization) {
-        return unauthorized('Token obrigatório.');
+        return unauthorized('token obrigatório.');
       }
 
       const [, token] = authorization.split('Bearer ');
