@@ -26,13 +26,11 @@ export class AddUserCreditCard implements Service {
 
     const [user] = await this.userRepository.find({ id: user_id });
 
-    const creditCardAreadyExists =
+    const creditCardAlreadyExists =
       user.cards &&
       user.cards.find(({ card_cvv }) => card_cvv === card.card_cvv);
 
-    if (creditCardAreadyExists) {
-      logger.info(creditCardAreadyExists);
-
+    if (creditCardAlreadyExists) {
       return forbidden('cartão já cadastrado.');
     }
 
