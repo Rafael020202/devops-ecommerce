@@ -1,7 +1,8 @@
 import {
   CreateUserService,
   SignInService,
-  UpdateUserAddressService
+  UpdateUserAddressService,
+  AddUserCreditCard
 } from '@/services';
 import { BcryptProvider, JwtProvider } from '@/providers';
 import { UserMongoRepository } from '@/infra/db';
@@ -38,6 +39,12 @@ const makeAuthMiddleware = () => {
   return new AuthMiddleware(jsonwebtoken);
 };
 
+const makeAddUserCreditCard = () => {
+  const userRepository = new UserMongoRepository();
+
+  return new AddUserCreditCard(userRepository);
+};
+
 export const userRoutes = [
   {
     method: 'post',
@@ -53,6 +60,12 @@ export const userRoutes = [
     method: 'patch',
     path: '/user/address',
     handler: makeUpdateUserAddressService(),
+    middleware: makeAuthMiddleware()
+  },
+  {
+    method: 'post',
+    path: '/user/credit_card',
+    handler: makeAddUserCreditCard(),
     middleware: makeAuthMiddleware()
   }
 ];

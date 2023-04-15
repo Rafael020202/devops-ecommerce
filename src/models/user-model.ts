@@ -3,12 +3,12 @@ export type UserModel = {
   name: string;
   email: string;
   password: string;
-  card?: {
+  cards?: {
     card_cvv: string;
     card_expiration_date: string;
     card_holder_name: string;
     card_number: string;
-  };
+  }[];
   address?: {
     city: string;
     country: string;
