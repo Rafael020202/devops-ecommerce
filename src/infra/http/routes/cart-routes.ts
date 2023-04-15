@@ -1,5 +1,8 @@
-import { AddToCartService, RemoveFromCartService } from '@/services';
-import { CartMongoRepository } from '@/infra/db';
+import {
+  AddProductToCartService,
+  RemoveProductFromCartService
+} from '@/services';
+import { CartMongoRepository, ProductMongoRepository } from '@/infra/db';
 import { AuthMiddleware } from '@/middlewares';
 import { JwtProvider } from '@/providers';
 
@@ -9,29 +12,30 @@ const makeAuthMiddleware = () => {
   return new AuthMiddleware(jsonwebtoken);
 };
 
-const makeAddToCartService = () => {
+const makeAddProductToCartService = () => {
   const cartRepository = new CartMongoRepository();
+  const productMongoRepository = new ProductMongoRepository();
 
-  return new AddToCartService(cartRepository);
+  return new AddProductToCartService(cartRepository, productMongoRepository);
 };
 
-const makeRemoveFromCartService = () => {
+const makeRemoveProductFromCartService = () => {
   const cartRepository = new CartMongoRepository();
 
-  return new RemoveFromCartService(cartRepository);
+  return new RemoveProductFromCartService(cartRepository);
 };
 
 export const cartRoutes = [
   {
     method: 'patch',
-    path: '/cart',
+    path: '/cart/product/:product_id',
     middleware: makeAuthMiddleware(),
-    handler: makeAddToCartService()
+    handler: makeAddProductToCartService()
   },
   {
     method: 'delete',
-    path: '/cart',
+    path: '/cart/product/:product_id',
     middleware: makeAuthMiddleware(),
-    handler: makeRemoveFromCartService()
+    handler: makeRemoveProductFromCartService()
   }
 ];

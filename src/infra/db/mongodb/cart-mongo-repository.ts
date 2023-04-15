@@ -24,7 +24,7 @@ export class CartMongoRepository implements CartRepository {
     data: CartRepository.update['Params']
   ): Promise<CartRepository.update['Result']> {
     const cartsCollection = MongoHelper.getCollection('carts');
-    const { user_id, ...newData } = data;
+    const { user_id, newData } = data;
 
     return cartsCollection.updateOne({ user_id }, { $set: newData });
   }

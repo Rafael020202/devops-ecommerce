@@ -26,7 +26,10 @@ export namespace CartRepository {
   };
 
   export type update = {
-    Params: CartModel;
+    Params: {
+      user_id: string;
+      newData: any;
+    };
     Result: any;
   };
 }
