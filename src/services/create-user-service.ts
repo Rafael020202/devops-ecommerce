@@ -24,6 +24,7 @@ export class CreateUserService implements Service {
       'name',
       'password',
       'document',
+      'phone_number',
       'email'
     ]);
 
@@ -37,7 +38,7 @@ export class CreateUserService implements Service {
       return badRequest('E-mail já possui cadastro.');
     }
 
-    const { email, name, password, document } = request;
+    const { email, name, password, document, phone_number } = request;
     const hashedPassword = await this.criptography.hash(password);
 
     await this.userRepository.create({
@@ -45,6 +46,7 @@ export class CreateUserService implements Service {
       email,
       name,
       document,
+      phone_number,
       password: hashedPassword,
       created_at: new Date(),
       updated_at: new Date()

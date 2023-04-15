@@ -4,6 +4,7 @@ export type UserModel = {
   email: string;
   password: string;
   document: string;
+  phone_number: string;
   cards?: {
     card_cvv: string;
     card_expiration_date: string;
