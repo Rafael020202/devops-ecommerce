@@ -13,19 +13,19 @@ export class UpdateUserAddressService implements Service {
     request: UpdateUserAddressService.Request
   ): Promise<HttpResponse> {
     const errors = checkMissingParams(request, [
-      'address.city',
-      'address.country',
-      'address.number',
-      'address.state',
-      'address.street',
-      'address.zipcode'
+      'city',
+      'country',
+      'number',
+      'state',
+      'street',
+      'zipcode'
     ]);
 
     if (errors.length) {
       return conflict(errors);
     }
 
-    const { user_id, address } = request;
+    const { user_id, ...address } = request;
 
     await this.userRepository.update({
       user_id,
