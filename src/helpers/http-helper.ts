@@ -35,6 +35,13 @@ export const created = (): HttpResponse => {
   };
 };
 
+export const accepted = (): HttpResponse => {
+  return {
+    body: {},
+    status: 202
+  };
+};
+
 export const success = (body: any): HttpResponse => {
   return {
     body,

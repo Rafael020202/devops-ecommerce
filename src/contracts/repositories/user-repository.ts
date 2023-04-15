@@ -8,6 +8,10 @@ export interface UserRepository {
   find(
     data: UserRepository.find['Params']
   ): Promise<UserRepository.find['Result']>;
+
+  update(
+    data: UserRepository.update['Params']
+  ): Promise<UserRepository.update['Result']>;
 }
 
 export namespace UserRepository {
@@ -19,5 +23,13 @@ export namespace UserRepository {
   export type find = {
     Params: { [key: string]: any };
     Result: UserModel[];
+  };
+
+  export type update = {
+    Params: {
+      user_id: string;
+      newData: any;
+    };
+    Result: any;
   };
 }

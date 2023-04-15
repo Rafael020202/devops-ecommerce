@@ -19,4 +19,16 @@ export class UserMongoRepository implements UserRepository {
       usersCollection.find(data, { projection: { _id: 0 } }).toArray()
     );
   }
+
+  async update(
+    data: UserRepository.update['Params']
+  ): Promise<UserRepository.update['Result']> {
+    const usersCollection = MongoHelper.getCollection('users');
+    const { user_id, newData } = data;
+
+    return usersCollection.updateOne(
+      { id: user_id },
+      { $set: { ...newData, updated_at: new Date() } }
+    );
+  }
 }
