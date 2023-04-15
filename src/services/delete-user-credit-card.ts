@@ -1,5 +1,9 @@
-import { Service, DeleteUserCreditCardDTO, HttpResponse } from '@/contracts';
-import { UserRepository } from '@/contracts';
+import {
+  Service,
+  DeleteUserCreditCardDTO,
+  HttpResponse,
+  UserRepository
+} from '@/contracts';
 import { accepted, conflict, forbidden, checkMissingParams } from '@/helpers';
 
 export class DeleteUserCreditCard implements Service {

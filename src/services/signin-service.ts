@@ -1,6 +1,11 @@
-import { Service, HttpResponse, SignInDTO } from '@/contracts';
-import { UserRepository } from '@/contracts';
-import { Criptography, Jwt } from '@/contracts';
+import {
+  Service,
+  HttpResponse,
+  SignInDTO,
+  Criptography,
+  Jwt,
+  UserRepository
+} from '@/contracts';
 import {
   badRequest,
   success,

@@ -1,5 +1,10 @@
-import { Service, CreateUserDTO, HttpResponse } from '@/contracts';
-import { UserRepository, Criptography } from '@/contracts';
+import {
+  Service,
+  CreateUserDTO,
+  HttpResponse,
+  UserRepository,
+  Criptography
+} from '@/contracts';
 import {
   badRequest,
   created,

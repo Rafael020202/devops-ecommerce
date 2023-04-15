@@ -1,5 +1,9 @@
-import { Service, UpdateUserAddressDTO, HttpResponse } from '@/contracts';
-import { UserRepository } from '@/contracts';
+import {
+  Service,
+  UpdateUserAddressDTO,
+  HttpResponse,
+  UserRepository
+} from '@/contracts';
 import { accepted, conflict, checkMissingParams } from '@/helpers';
 
 export class UpdateUserAddressService implements Service {
