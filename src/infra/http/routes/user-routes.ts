@@ -4,6 +4,7 @@ import {
   UpdateUserAddressService,
   AddUserCreditCard,
   DeleteUserCreditCard,
+  GetUserDataService,
   SetUserDefaultCreditCardService
 } from '@/services';
 import { BcryptProvider, JwtProvider } from '@/providers';
@@ -55,6 +56,12 @@ const makeSetUserDefaultCreditCardService = () => {
   return new SetUserDefaultCreditCardService(userRepository);
 };
 
+const makeGetUserDataService = () => {
+  const userRepository = new UserMongoRepository();
+
+  return new GetUserDataService(userRepository);
+};
+
 export const userRoutes = [
   {
     method: 'post',
@@ -88,6 +95,12 @@ export const userRoutes = [
     method: 'patch',
     path: '/user/credit_card/default/:card_cvv',
     handler: makeSetUserDefaultCreditCardService(),
+    middleware: makeAuthMiddleware()
+  },
+  {
+    method: 'get',
+    path: '/user',
+    handler: makeGetUserDataService(),
     middleware: makeAuthMiddleware()
   }
 ];

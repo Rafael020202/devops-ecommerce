@@ -7,3 +7,4 @@ export * from './add-user-credit-card';
 export * from './delete-user-credit-card';
 export * from './set-user-default-credit-card-service';
 export * from './checkout-service';
+export * from './get-user-data-service';

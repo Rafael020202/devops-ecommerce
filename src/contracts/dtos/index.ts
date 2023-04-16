@@ -7,3 +7,4 @@ export * from './set-user-default-credit-card-dto';
 export * from './update-user-address-dto';
 export * from './add-user-credit-card-dto';
 export * from './delete-user-credit-card-dto';
+export * from './get-user-data-dto';
